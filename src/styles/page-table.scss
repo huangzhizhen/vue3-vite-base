@@ -1,0 +1,18 @@
+.main-body{
+  .page-table {
+    background: #fff;
+    padding: 20px;
+    .el-table{
+      border: 1px solid #e6e6e6;
+      .cell{
+        text-align: center;
+      }
+    }
+  }
+  .pagination-box {
+    margin-top: 35px;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+  }
+}
