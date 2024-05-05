@@ -1,6 +1,9 @@
 export default  {
   common: {
     save: 'Save',
-    testName:'Test Name',
+    testName: 'Test Name',
+    monitorWarning: 'Monitor Warning',
+    add: 'Add',
+    edit: 'Edit',
   }
 }

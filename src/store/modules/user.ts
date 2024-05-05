@@ -1,4 +1,8 @@
 import { defineStore } from 'pinia'
+type User = {
+  username: string
+  email: string
+}
 
 const useUserStore = defineStore('user',{
   state: () => {
@@ -13,7 +17,7 @@ const useUserStore = defineStore('user',{
     }
   },
   actions: {
-    setUser(user) {
+    setUser(user:User) {
       this.username = user.username
       this.email = user.email
     }

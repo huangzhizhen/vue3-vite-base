@@ -1,18 +1,34 @@
-.main-body{
-  .page-table {
-    background: #fff;
-    padding: 20px;
-    .el-table{
-      border: 1px solid #e6e6e6;
-      .cell{
-        text-align: center;
+.page{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  .main-body{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .page-filter{
+      margin: 20px 0;
+      width: 100%;
+    }
+    .page-table {
+      background: #fff;
+      width: 100%;
+      .el-table{
+        border: 1px solid #e6e6e6;
+        .cell{
+          text-align: center;
+        }
       }
     }
-  }
-  .pagination-box {
-    margin-top: 35px;
-    display: flex;
-    justify-content: center;
-    padding: 15px;
+    .pagination-box {
+      margin-top: 35px;
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+    }
   }
 }

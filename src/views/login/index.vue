@@ -28,6 +28,7 @@
 import navTop from './components/navTop.vue'
 import { useRouter } from 'vue-router'
 import { reactive} from 'vue'
+import { ElMessage } from 'element-plus';
 const loginForm = reactive({
   username: 'admin',
   password: 'admin'
@@ -39,9 +40,8 @@ const login = () => {
       message: '登录成功',
       type: 'success',
     })
-    router.push({ path: '/baseData/personManger' })
+    router.push({ path: '/warm/warmList' })
   }
-
 }
 
 </script>

@@ -15,12 +15,10 @@ axios.interceptors.request.use(
       '/codex/group/save',
       '/codex/user/save',
       '/codex/gvsuser/save',
-      '/codex/gvsuser/delete'
+      '/codex/gvsuser/delete',
+      '/codex/project/relationGvsProject',
     ]
-    let blobUrl = [
-      '/codex/export/userCode'
-    ]
-    if (jsonUrlList.includes(config.url)) {
+    if (jsonUrlList.includes(config.url ?? '')) {
       config.headers['Content-Type'] = 'application/json'
     } else {
       config.headers['Content-Type'] = 'application/x-www-form-urlencoded'

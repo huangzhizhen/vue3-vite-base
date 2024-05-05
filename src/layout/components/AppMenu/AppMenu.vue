@@ -1,8 +1,8 @@
 <template>
   <el-menu
     class="el-menu-vertical-demo"
-    background-color="#545c64"
-    text-color="#fff"
+    background-color="#fff"
+    text-color="#666"
     :collapse="isCollapse"
     :collapse-transition="false"
     :default-openeds="openeds"
@@ -11,55 +11,40 @@
     :unique-opened="true"
     @select="handleSelect"
     router>
-    <template v-for="(item,index) in filteredRoutes" :key="index">
-      <router-link :to="item.path" v-if="!item.children">
-        <el-menu-item :index="item.path">
-          <el-icon>
-            <component :is="item.meta.icon"></component>
-          </el-icon>
-          <svg-icon iconName="icon-renyuan"></svg-icon>
-	        <span>{{ item.meta.title }}</span>
-        </el-menu-item>
-      </router-link>
-
-      <el-sub-menu :index="item.path" v-else>
-        <!-- 一级标题 -->
+    <template v-for="(item) in filteredRoutes" :key="item.path">
+      <el-sub-menu :index="item.path" v-if="item.children?.length > 1">
+        <!-- 标题 -->
         <template #title>
-          <el-icon v-if="item.meta.iconType==1">
-            <component :is="item.meta.icon"></component>
-          </el-icon>
-          <svg-icon iconName="icon-renyuan" v-else></svg-icon>
-          <span>{{ item.meta.title }}</span>
-          </template>
+          <Item :icon="item.meta.icon" :title="item.meta.title" :isElMenuItem="false"/>
+        </template>
+        <!-- 二级菜单 -->
         <template v-for="(item1) in item.children" :key="item1.path">
           <router-link :to="item.path+'/'+item1.path">
-            <el-menu-item :index="item.path+'/'+item1.path">
-              <el-icon v-if="item1.meta.iconType==1">
-                <component :is="item1.meta.icon"></component>
-              </el-icon>
-              <svg-icon :iconName="item1.meta.icon" v-else ></svg-icon>
-              <span>{{ item1.meta.title }}</span>
-            </el-menu-item>
+            <Item :icon="item1.meta.icon" :title="item1.meta.title" :path="item.path+'/'+item1.path" :isElMenuItem="true"/>
           </router-link>
         </template>
       </el-sub-menu>
+      <!-- 当children<=1得时候，直接循环二级菜单 -->
+      <template v-else>
+        <Item :icon="subItem.meta.icon" :title="subItem.meta.title" :path="item.path+'/'+subItem.path" :isElMenuItem="true"  v-for="subItem in item.children" :key="subItem.meta.path"/>
+      </template>
     </template>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
-  import { ref,watch,onMounted,computed } from 'vue';
+  import Item from './item.vue'
+  import { useRouter} from 'vue-router';
+  import { ref,watch,computed } from 'vue';
   import { useAppLayoutStore } from '@/store/modules/appLayout'
-
   const appLayoutStore = useAppLayoutStore()
   const isCollapse = computed(() => appLayoutStore.isCollapse);
   const router = useRouter()
-  const filteredRoutes = router.options.routes.filter(route => {
+  const filteredRoutes= router.options.routes.filter((route: any) => {
     return !route.meta || !route.meta.hidden;
-  });
+  }) as any[]
   const openeds = ref([''])
-  watch(() => router.currentRoute.value, (route) => {
+  watch(() => router.currentRoute.value, (route:any) => {
     if(route.matched.length > 1) {
       const parentPath:string = route.matched[1].path
       openeds.value = [ parentPath ]
@@ -84,11 +69,15 @@
 .el-menu-vertical-demo {
   width: 100%;
   border-right: none;
-  background-color: #304156;
   h3 {
     color: #fff;
     text-align: center;
     margin-top: 10px;
+  }
+}
+.el-menu-item.is-active{
+  .icons{
+    filter:brightness(1.2) saturate(-1.5)!important;
   }
 }
 </style>

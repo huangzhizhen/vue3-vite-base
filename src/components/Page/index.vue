@@ -17,35 +17,46 @@
 <script setup lang="ts">
 // 定义prop接受父组件传递的值
 import { defineProps,defineEmits } from 'vue';
+// defineProps<{
+//   pageSizes?: {
+//     type: number[],
+//     default: [10, 20, 50, 100]
+//   },
+//   currentPageSize?:{
+//     type: number,
+//     default: 10
+//   },
+//   total?: {
+//     type: number,
+//     default: 1000
+//   },
+//   currentPage?:{
+//     type: number,
+//     default: 1
+//   },
+//   showSizer?: {
+//     type: Boolean,
+//     default: true
+//   },
+//   showTotal?: {
+//     type: Boolean,
+//     default: true
+//   },
+//   showJumper?: {
+//     type: Boolean,
+//     default: true
+//   },
+// }>()
+
+// 定义prop接受父组件传递的值
 defineProps<{
-  pageSizes?: {
-    type: number[],
-    default: [10, 20, 50, 100]
-  },
-  currentPageSize?:{
-    type: number,
-    default: 10
-  },
-  total?: {
-    type: number,
-    default: 1000
-  },
-  currentPage?:{
-    type: number,
-    default: 1
-  },
-  showSizer: {
-    type: Boolean,
-    default: true
-  },
-  showTotal: {
-    type: Boolean,
-    default: true
-  },
-  showJumper: {
-    type: Boolean,
-    default: true
-  },
+  pageSizes?: number[],
+  currentPageSize?: number,
+  total?: number,
+  currentPage?: number,
+  showSizer?: boolean,
+  showTotal?: boolean,
+  showJumper?: boolean
 }>()
 
 const handleSizeChange = (val: number) => {
@@ -59,11 +70,11 @@ const handleCurrentChange = (val: number) => {
 const emit = defineEmits([ "onPageSizeChange",'onChange' ]);
 const onPageSizeChange = (val:number) => {
   //子组件用emit向父组件触发一个事件
-  emit('on-page-size-change',val);
+  emit('onPageSizeChange',val);
 }
 const onChange = (val:number) => {
   //子组件用emit向父组件触发一个事件
-  emit('on-change',val);
+  emit('onChange',val);
 }
 </script>
 <style scoped lang="scss">

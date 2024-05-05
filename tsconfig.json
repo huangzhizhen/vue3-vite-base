@@ -5,21 +5,31 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    // "types": ["element-plus/global"],
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "allowJs": true,
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "types": ["vite/client", "element-plus/global", "unplugin-icons/types/vue"],
+  "skipLibCheck": true /* Skip type checking all .d.ts files. */,
+  "allowSyntheticDefaultImports": true /* 允许默认导入 */,
+  "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "typings"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

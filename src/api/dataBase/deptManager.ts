@@ -14,3 +14,4 @@ export function updateDept(data: any) {
     data
   });
 }
+

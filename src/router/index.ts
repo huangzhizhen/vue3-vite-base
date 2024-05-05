@@ -4,7 +4,14 @@ import {
   RouteRecordRaw
 } from 'vue-router'
 import AppLayout from '@/layout/AppLayout.vue'
-import { RouterView } from 'vue-router'
+// import { RouterView } from 'vue-router'
+import IconMenuCompany from '~icons/menu/company';
+import IconMenuPerson from '~icons/menu/person';
+import IconMenuBar from '~icons/menu/bar';
+import IconMenuBar1 from '~icons/home/bar1';
+import IconIcBaseline5g from '~icons/ic/baseline-5g'
+import i18n from "@/lang/index"
+const { locale, t } = i18n.global
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -14,14 +21,34 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/warm',
+    name: 'warm',
+    component: AppLayout,
+    redirect: '/warmList',
+    meta: {
+      title: t('common.monitorWarning'),
+      icon: IconMenuBar1,
+    },
+    children: [
+      {
+        path: "warmList",
+        name:'warmList',
+        component: () => import('@/views/warm/index.vue'),
+        meta: {
+          title: i18n.global.t('common.monitorWarning'),
+          icon: IconMenuCompany,
+        },
+      }
+    ]
+  },
+  {
     path: '/baseData',
-    name: 'Root',
+    name: 'baseData',
     component: AppLayout,
     redirect: '/personManger',
     meta: {
       title: '基础数据',
-      icon: 'Operation',
-      iconType:1 //1-el,2-svg
+      icon: IconMenuBar1,
     },
     children: [
       {
@@ -30,8 +57,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/baseData/personManger.vue"),
         meta: {
           title: '人员管理',
-          icon: 'Avatar',
-          iconType:1
+          icon: IconMenuCompany,
         },
       },
       {
@@ -40,16 +66,20 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/baseData/deptManger.vue"),
         meta: {
           title: '部门管理',
-          icon: 'SetUp',
-          iconType:1
+          icon: IconMenuBar,
         },
       },
       {
         path: 'gitPersonManger',
         name: 'gitPersonManger',
         component: () => import('@/views/baseData/gitPersonManger.vue'),
-        meta: { title: 'Git账号列表', icon: 'Connection',
-          iconType:1 },
+        meta: { title: 'Git账号列表', icon: IconMenuBar1},
+      },
+      {
+        path: 'projectManager',
+        name: 'projectManager',
+        component: () => import('@/views/baseData/projectManager.vue'),
+        meta: { title: '项目管理', icon: 'Connection'},
       },
     ]
   },
@@ -60,8 +90,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/personSet',
     meta: {
       title: '设置setting',
-      icon: 'user',
-      iconType:1
+      icon: 'Setting',
     },
     children: [
       {
@@ -70,8 +99,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/setting/deptSet.vue"),
         meta: {
           title: '人员代码质量',
-          icon: 'icon-founderbusiness',
-          iconType:2
+          icon: IconIcBaseline5g,
         },
       },
       {
@@ -79,10 +107,48 @@ const routes: Array<RouteRecordRaw> = [
         name: "deptSet",
         meta: {
           title: '部门代码质量',
-          icon: 'icon-bumenzhiliang',
-          iconType: 2,
+          icon: IconIcBaseline5g,
         },
         component: () => import("@/views/setting/personSet.vue")
+      }
+    ]
+  },
+  {
+    path: '/echartShow',
+    name: 'echartShow',
+    component: AppLayout,
+    redirect: '/codeCommitTotal',
+    meta: {
+      title: '代码提交数据分析',
+      icon: 'Histogram',
+    },
+    children: [
+      {
+        path: "codeCommitTotal",
+        name: "codeCommitTotal",
+        component: () => import("@/views/echartShow/codeCommitTotal.vue"),
+        meta: {
+          title: '代码提交总量',
+          icon: IconMenuBar,
+        },
+      },
+      {
+        path: "deptChart",
+        name: "deptChart",
+        meta: {
+          title: '部门代码',
+          icon: IconMenuPerson,
+        },
+        component: () => import("@/views/echartShow/deptChart.vue")
+      },
+      {
+        path: "projectChart",
+        name: "projectChart",
+        meta: {
+          title: '项目代码',
+          icon: IconMenuPerson,
+        },
+        component: () => import("@/views/echartShow/projectChart.vue")
       }
     ]
   },
@@ -102,3 +168,4 @@ const router = createRouter({
 })
 
 export default router
+

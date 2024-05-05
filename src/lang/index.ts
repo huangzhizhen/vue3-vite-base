@@ -1,19 +1,24 @@
-import  {createI18n }  from 'vue-i18n'
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import { I18n, createI18n } from 'vue-i18n'
+import { App } from 'vue';
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import enUS from 'element-plus/es/locale/lang/en'
 
-import locale_zhCn from '@/lang/local/zh-cn'
-import locale_enUs from '@/lang/local/en-US'
+import locale_zhCn from '@/lang/local/zh-CN.ts'
+import locale_enUs from '@/lang/local/en-US.ts'
 
 const messages = {
   zh: Object.assign(locale_zhCn, zhCn),
-  en: Object.assign(locale_enUs)
+  en: Object.assign(locale_enUs,enUS)
 }
 
-const il8n = new createI18n({
-  locale: 'zh',
-  // legacy: false, // 如果要支持compositionAPI，此项必须设置为false;
-  globalInjection: true, // 全局注册$t方法
+const il8n: I18n = createI18n({
+  globalInjection: true, // 如果设置true, $t() 函数将注册到全局
+  legacy: false, //如果想在composition api中使用需要设置为false
+  locale: localStorage.getItem('lang') || 'zh',
   messages
 })
+
+
+
 
 export default il8n
